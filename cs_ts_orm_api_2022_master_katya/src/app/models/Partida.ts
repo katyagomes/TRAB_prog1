@@ -1,23 +1,27 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany} from 'typeorm';
-
-import Round from '../models/Round';
+import {Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
+import Jogador from '../models/Jogador';
+import Round from './Round';
 
 @Entity('tb_partida')
-export default class Partida {
+class Partida {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn()//geracao automatica de chave primaria
     id: number;
 
-    //coluna opcional
     @Column('date', {nullable: true})
-    inicio: Date;
+    fim: Date;
     
     //coluna opcional, caso nao seja informado data, vai recebere a data corrente.
     @Column('date', {default: () => 'CURRENT_TIMESTAMP'})
-    fim: Date;
+    inicio: Date;
 
-    //agregacao por composicao
-    @OneToMany(() => Round, round => round.partida)
-    rounds: Round[];    
+    
+    
+    @ManyToOne(type => Jogador)
+    @JoinColumn({name: "jogador_nickname", referencedColumnName: "nickname"})
+    jogador: Jogador;  
 
+    @OneToMany( () => Round, round => round.partida)
+    rounds: Round[];
 }
+export default Partida;

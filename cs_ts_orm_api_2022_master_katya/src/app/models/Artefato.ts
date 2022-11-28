@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, TableInheritance, ManyToOne, JoinColumn } from 'typeorm';
+import {Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn, TableInheritance} from 'typeorm';
 
-import ItensCompra from './ItensCompra';
+import Jogador from '../models/Jogador';
 
 @Entity('tb_artefato')
 @TableInheritance({ column: { type: "varchar", name: "type" } })
@@ -12,13 +12,11 @@ export default abstract class Artefato {
     @Column('text')
     nome: string;
 
-    @Column()
+    @Column({type: "decimal" , nullable: true,  precision: 2 })
     peso: number;
 
-    @Column()
+    @Column({type: "decimal" , nullable: true,  precision: 2 })
     valor: number;
 
-    // @ManyToOne(type => ItensCompra)
-    // @JoinColumn({ name: "itensCompra_id", referencedColumnName: "id" })
-    // endereco: ItensCompra;
+
 }

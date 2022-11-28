@@ -1,27 +1,25 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-
-import Compra from './Compra';
-
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, RepositoryNotFoundError, JoinColumn} from 'typeorm';
+import Jogador from '../models/Jogador';
 import Artefato from './Artefato';
+import Compra from './Compra'
 
-@Entity('tb_itenscompra')
-export default class ItensCompra {
-    @PrimaryColumn('int')
+@Entity('tb_itens_compra')
+class ItemCompra {
+    @PrimaryGeneratedColumn()//geracao automatica de chave primaria
     id: number;
 
-    @Column('text')
-    quantidade: String;
+    @Column({type: "varchar", nullable: true, precision: 2 })
+    quantidade: number;
 
-    @Column()
+    @Column({type: "varchar", nullable: true, precision: 2 })
     valor: number;
 
-    //Composição
     @ManyToOne(type => Compra)
-    @JoinColumn({ name: 'compra_id', referencedColumnName: 'id' })
-    compra: Compra;
+    @JoinColumn({name: "compra_id", referencedColumnName: "id"})
+    compra: Compra; 
 
-    //associação.
     @ManyToOne(type => Artefato)
-    @JoinColumn({name: "artefato_id", referencedColumnName:"id"})
-    artefato: Artefato;
+    @JoinColumn({name: "artefato_id", referencedColumnName: "id"})
+    artefato: Artefato; 
 }
+export default ItemCompra;

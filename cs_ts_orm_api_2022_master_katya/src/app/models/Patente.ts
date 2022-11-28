@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToMany} from 'typeorm';
 
 @Entity('tb_patente')
 class Patente {//codigo fonte referente ao pdf da parte 7.

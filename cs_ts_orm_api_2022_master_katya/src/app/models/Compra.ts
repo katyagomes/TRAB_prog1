@@ -1,27 +1,24 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-
-import Jogador from './Jogador';
-import ItensCompra from './ItensCompra';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn} from 'typeorm';
+import Jogador from '../models/Jogador';
+import Itens_Compra from '../models/Itens_Compra'
 
 @Entity('tb_compra')
 class Compra {
-
-    @PrimaryColumn('int')
+    @PrimaryGeneratedColumn()//geracao automatica de chave primaria
     id: number;
 
-    @Column('timestamp')
+    @Column('date', {default: () => 'CURRENT_TIMESTAMP'})
     data: Date;
 
-    @Column()
+    @Column({type: "decimal", nullable: true, precision: 2 })
     total: number;
 
-    //agregacao por composicao: OneToMany do Jogador referencia esse atributo.
     @ManyToOne(type => Jogador)
-    @JoinColumn({name: "jogador_nickname", referencedColumnName:"nickname"})
-    jogador: Jogador;
+    @JoinColumn({name: "jogador_nickname", referencedColumnName: "nickname"})
+    jogador: Jogador; 
 
-    //agregacao por composicao
-    @OneToMany(() => ItensCompra, itensCompra => itensCompra.compra)
-    rounds: ItensCompra[];
+    @OneToMany( () => Itens_Compra, Itens_Compra => Itens_Compra.compra)
+    itens: Itens_Compra[];
+   
 }
 export default Compra;
