@@ -1,10 +1,8 @@
-import {Request, Response} from 'express';
-import {getRepository} from 'typeorm';
-import Jogador from '../models/Jogador';
-import Patente from '../models/Patente';
+import { Request, Response } from 'express';
+import { getRepository } from 'typeorm';
+import Patente from "../models/Patente";
 
 class PatenteController {
-
     async list(req: Request, res: Response) {
 
         const repository = getRepository(Patente);
