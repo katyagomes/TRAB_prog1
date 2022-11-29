@@ -17,29 +17,24 @@ describe("persistence test", () => {
         var agent = supertest(app);
         const postList = await agent.get('/patentes');
         expect(postList.statusCode).toEqual(200);
-        if (postList.body.length > 0) { // A tabela patente possui registros
-            for (const p of postList.body) { // Acessa os registros da tabela através de um laço for
+        if (postList.body.length > 0) { 
+            for (const p of postList.body) {
 
-                const data = { "id": p.id }; // Pega do id de todas as patentes cadastradas
+                const data = { "id": p.id };
 
-                //imprimi na tela todas as informações da tb_patente
                 console.log("Encontrou a patente: ");
                 console.log(data);
 
                 const postDelete = await agent.delete('/patentes').send(data);
 
-                //remoção dos dados dessa tabela.
                 console.log("Removeu a patente: ");
                 console.log(data);
 
                 expect(postDelete.statusCode).toEqual(204);
             }
         } else {
-            //insere novos registros na tb_patente
             const data = { "nome": "Teste1", "cor": "Azul" };
             const postCreate = await agent.post('/patentes').send(data);
-
-            //Mostra a patente cadastrada
             console.log("Cadastrou a patente: ");
             console.log(postCreate);
 
