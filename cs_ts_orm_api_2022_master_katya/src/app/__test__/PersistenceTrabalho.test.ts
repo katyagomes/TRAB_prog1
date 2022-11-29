@@ -36,7 +36,7 @@ describe("persistence test", () => {
             }
         } else {
             //insere novos registros na tb_patente
-            const data = { "nome": "Patente de teste", "cor": "laranja" };
+            const data = { "nome": "Teste1", "cor": "Azul" };
             const postCreate = await agent.post('/patentes').send(data);
 
             //Mostra a patente cadastrada
@@ -69,14 +69,14 @@ describe("persistence test", () => {
         } else {
             console.log("Não encontrou jogadores cadastrados, cadastrando novo jogador e patente.");
 
-            const postCreatePatente = await agent.post('/patentes').send({ "nome": "Platina", "cor": "cinza" });
+            const postCreatePatente = await agent.post('/patentes').send({ "nome": "Ouro", "cor": "dourado" });
             expect(postCreatePatente.statusCode).toEqual(200);
-            const postFindPatente = await agent.get('/patentes').send({ "nome": "Platina" });
+            const postFindPatente = await agent.get('/patentes').send({ "nome": "Ouro" });
             expect(postFindPatente.statusCode).toEqual(200);
 
             //console.log(postFindEndereco.body);
             const data = {
-                "nickname": "teste09090",
+                "nickname": "teste9",
                 "senha": "123456",
                 "pontos": 0,
                 "patentes": [{"id":postFindPatente.body[0]}]
